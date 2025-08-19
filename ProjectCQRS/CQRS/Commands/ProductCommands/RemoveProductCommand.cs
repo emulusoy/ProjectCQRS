@@ -4,5 +4,9 @@
     {
         public int ProductId { get; set; }
 
+        public RemoveProductCommand(int productId)
+        {
+            ProductId = productId;
+        }
     }
 }

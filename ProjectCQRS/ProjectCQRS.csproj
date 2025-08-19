@@ -19,9 +19,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQRS\Handlers\CategoryHandlers\" />
-    <Folder Include="CQRS\Handlers\ProductHandlers\" />
-  </ItemGroup>
-
 </Project>

@@ -2,11 +2,11 @@
 {
     public class GetCategoryByIdQuery
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
 
-        public GetCategoryByIdQuery(int id)
+        public GetCategoryByIdQuery(int categoryId)
         {
-            Id = id;
+            CategoryId = categoryId;
         }
     }
 }
