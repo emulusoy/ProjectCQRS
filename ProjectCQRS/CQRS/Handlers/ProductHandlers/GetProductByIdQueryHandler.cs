@@ -11,7 +11,7 @@ namespace ProjectCQRS.CQRS.Handlers.ProductHandlers
         private readonly CQRSContext _context = context;
         public async Task<GetProductByIdQueryResult> Handle(GetProductByIdQuery query)
         {
-            var values = await _context.Products.FindAsync(query.Id);
+            var values = await _context.Products.FindAsync(query.ProductId);
             return new GetProductByIdQueryResult
             {
                 ProductName = values.ProductName,

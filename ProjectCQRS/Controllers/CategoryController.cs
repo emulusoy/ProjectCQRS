@@ -20,7 +20,7 @@ namespace ProjectCQRS.Controllers
             var values=await _getCategoryQueryHandler.Handle();
             return View(values);
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
             await _createCategoryCommandHandler.Handle(command);

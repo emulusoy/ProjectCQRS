@@ -27,22 +27,21 @@ namespace ProjectCQRS.Controllers
             var values = await _getProductQueryHandler.Handle();
             return View(values);
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductCommand command)
         {
             await _createProductCommandHandler.Handle(command);
             return RedirectToAction("ProductList");
         }
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int productId)
         {
-            await _removeProductCommanHandler.Handle(new RemoveProductCommand(id));
+            await _removeProductCommanHandler.Handle(new RemoveProductCommand(productId));
             return RedirectToAction("ProductList");
         }
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int id)
         {
             var values = await _getProductByIdQueryHandler.Handle(new GetProductByIdQuery(id));
-
             return View(values);
         }
         [HttpPost]

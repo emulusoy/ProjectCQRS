@@ -2,11 +2,11 @@
 {
     public class GetProductByIdQuery
     {
-        public int Id { get; set; }
+        public int ProductId { get; set; }
 
         public GetProductByIdQuery(int id)
         {
-            Id = id;
+            ProductId = id;
         }
     }
 }
