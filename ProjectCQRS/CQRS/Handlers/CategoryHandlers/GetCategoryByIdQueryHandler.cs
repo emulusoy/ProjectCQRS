@@ -15,6 +15,7 @@ namespace ProjectCQRS.CQRS.Handlers.CategoryHandlers
             return new GetCategoryByIdQueryResult
             {
                 CategoryName = values.CategoryName
+                , CategoryId = values.CategoryId
             };
         }
     }

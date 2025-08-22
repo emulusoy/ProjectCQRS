@@ -17,9 +17,7 @@ namespace ProjectCQRS.CQRS.Handlers.ProductHandlers
             var val = await _context.Products.FindAsync(command.ProductId);
 
                 _context.Products.Remove(val);
-                await _context.SaveChangesAsync();
-            
-
+                await _context.SaveChangesAsync();        
         }
     }
 }
