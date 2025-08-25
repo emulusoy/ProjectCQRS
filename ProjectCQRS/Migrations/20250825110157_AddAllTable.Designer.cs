@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCQRS.Context;
 
@@ -11,9 +12,11 @@ using ProjectCQRS.Context;
 namespace ProjectCQRS.Migrations
 {
     [DbContext(typeof(CQRSContext))]
-    partial class CQRSContextModelSnapshot : ModelSnapshot
+    [Migration("20250825110157_AddAllTable")]
+    partial class AddAllTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +69,9 @@ namespace ProjectCQRS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Km")
-                        .HasColumnType("int");
+                    b.Property<string>("Km")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Luggage")
                         .IsRequired()
