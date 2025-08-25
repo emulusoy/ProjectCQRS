@@ -25,7 +25,6 @@ builder.Services.AddScoped<CQRSContext>();
 
 
 
-
 var app = builder.Build();
 
 app.UseHttpsRedirection();
