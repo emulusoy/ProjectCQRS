@@ -1,0 +1,379 @@
+﻿@model List<GetCarQueryResult>
+@{
+    ViewData["Title"] = "CarList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section PageHeader{
+    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+        <div>
+            <h2 class="h4 mb-1">Araç Listesi</h2>
+            <div class="text-muted small">Toplam @Model?.Count araç</div>
+        </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate">
+            <i class="bi bi-plus-lg me-1"></i> Yeni Araç
+        </button>
+    </div>
+    <hr/>
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2 mb-3">
+            <div class="col-md-4 ms-auto">
+                <input id="txtSearch" type="search" class="form-control form-control-sm" placeholder="Tabloda ara...">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm align-middle" id="tblCars">
+                <thead>
+                <tr>
+                    <th style="width:80px">#ID</th>
+                    <th style="width:80px">Görsel</th>
+                    <th>Ad</th>
+                    <th class="text-end" style="width:120px">Fiyat</th>
+                    <th style="width:110px">Vites</th>
+                    <th style="width:80px">Yakıt</th>
+                    <th style="width:100px">Model</th>
+                    <th style="width:80px">KM</th>
+                    <th style="width:90px">Koltuk</th>
+                    <th style="width:90px">Bagaj</th>
+                    <th style="width:90px">Puan</th>
+                    <th style="width:90px">Auto</th>
+                    <th style="width:90px">BrandID</th>
+                    <th style="width:160px" class="text-end">İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr data-row-id="@item.CarID">
+                            <td>@item.CarID</td>
+                            <td>
+                                <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl) ? "https://placehold.co/64x40" : item.ImageUrl)"
+                                     alt="car" style="width:64px;height:40px;object-fit:cover;border-radius:4px" />
+                            </td>
+                            <td class="car-name">@item.CarName</td>
+                            <td class="text-end">@item.Price.ToString("N2")</td>
+                            <td>@item.Transmission</td>
+                            <td>@item.Fuel</td>
+                            <td>@item.ModelYear</td>
+                            <td>@item.Km</td>
+                            <td>@item.Seat</td>
+                            <td>@item.Luggage</td>
+                            <td>@item.ReviewPoint</td>
+                            <td>@item.Auto</td>
+                            <td>@item.BrandID</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary"
+                                            data-bs-toggle="modal" data-bs-target="#modalEdit"
+                                            data-carid="@item.CarID"
+                                            data-carname="@item.CarName"
+                                            data-imageurl="@item.ImageUrl"
+                                            data-price="@item.Price"
+                                            data-transmission="@item.Transmission"
+                                            data-seat="@item.Seat"
+                                            data-luggage="@item.Luggage"
+                                            data-fuel="@item.Fuel"
+                                            data-modelyear="@item.ModelYear"
+                                            data-km="@item.Km"
+                                            data-auto="@item.Auto"
+                                            data-reviewpoint="@item.ReviewPoint"
+                                            data-brandid="@item.BrandID">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#modalDelete"
+                                            data-id="@item.CarID" data-name="@item.CarName">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="14" class="text-center text-muted py-5">Kayıt bulunamadı.</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form id="formCreate" asp-action="CreateCar" asp-controller="Admin" method="post" class="modal-content">
+            @Html.AntiForgeryToken()
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-plus-lg me-1"></i> Yeni Araç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Araç Adı</label>
+                        <input name="CarName" class="form-control" required maxlength="150" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Fiyat</label>
+                        <input name="Price" type="number" step="0.01" class="form-control" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Puan</label>
+                        <input name="ReviewPoint" type="number" step="0.1" min="0" max="10" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Görsel URL</label>
+                        <input name="ImageUrl" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Vites</label>
+                        <input name="Transmission" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Yakıt</label>
+                        <input name="Fuel" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Model Yılı</label>
+                        <input name="ModelYear" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">KM</label>
+                        <input name="Km" type="number" step="1" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Koltuk</label>
+                        <input name="Seat" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Bagaj</label>
+                        <input name="Luggage" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Auto</label>
+                        <input name="Auto" class="form-control" placeholder="Örn: Otomatik / Manuel / Var / Yok" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">BrandID</label>
+                        <input name="BrandID" type="number" step="1" class="form-control" />
+                        @* İstersen ViewBag.BrandList ile <select> yapabilirsin *@
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+                <button class="btn btn-primary" type="submit">Ekle</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form id="formEdit" asp-action="UpdateCar" asp-controller="Admin" method="post" class="modal-content">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="CarID" id="editCarID" />
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-pencil me-1"></i> Aracı Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Araç Adı</label>
+                        <input name="CarName" id="editCarName" class="form-control" required maxlength="150" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Fiyat</label>
+                        <input name="Price" id="editPrice" type="number" step="0.01" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Puan</label>
+                        <input name="ReviewPoint" id="editReviewPoint" type="number" step="0.1" min="0" max="10" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Görsel URL</label>
+                        <input name="ImageUrl" id="editImageUrl" class="form-control" />
+                        <div class="mt-2">
+                            <img id="editPreview" src="https://placehold.co/128x80" style="width:128px;height:80px;object-fit:cover;border-radius:4px" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Vites</label>
+                        <input name="Transmission" id="editTransmission" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Yakıt</label>
+                        <input name="Fuel" id="editFuel" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Model Yılı</label>
+                        <input name="ModelYear" id="editModelYear" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">KM</label>
+                        <input name="Km" id="editKm" type="number" step="1" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Koltuk</label>
+                        <input name="Seat" id="editSeat" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Bagaj</label>
+                        <input name="Luggage" id="editLuggage" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Auto</label>
+                        <input name="Auto" id="editAuto" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Brand Name</label>
+                        <input name="BrandName" id="editBrandID" type="number" step="1" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+                <button class="btn btn-primary" type="submit">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="formDelete" asp-action="DeleteCar" asp-controller="Admin" method="post" class="modal-content">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" id="delId" />
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-trash me-1"></i> Silme Onayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">
+                    Silinecek araç: <strong id="delName">-</strong>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+                <button class="btn btn-danger" type="submit">Evet, Sil</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+(function(){
+    // Basit arama
+    const txtSearch = document.getElementById('txtSearch');
+    const tbody = document.querySelector('#tblCars tbody');
+    txtSearch?.addEventListener('input', function(){
+        const q = this.value.toLowerCase();
+        for (const tr of tbody.rows){
+            tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
+        }
+    });
+
+    // EDIT modalını doldur
+    const modalEdit = document.getElementById('modalEdit');
+    modalEdit?.addEventListener('show.bs.modal', e => {
+        const b = e.relatedTarget;
+        const get = (k) => b.getAttribute(k);
+
+        document.getElementById('editCarID').value     = get('data-carid');
+        document.getElementById('editCarName').value   = get('data-carname');
+        document.getElementById('editImageUrl').value  = get('data-imageurl') || '';
+        document.getElementById('editPrice').value     = get('data-price');
+        document.getElementById('editTransmission').value = get('data-transmission');
+        document.getElementById('editSeat').value      = get('data-seat');
+        document.getElementById('editLuggage').value   = get('data-luggage');
+        document.getElementById('editFuel').value      = get('data-fuel');
+        document.getElementById('editModelYear').value = get('data-modelyear');
+        document.getElementById('editKm').value        = get('data-km');
+        document.getElementById('editAuto').value      = get('data-auto');
+        document.getElementById('editReviewPoint').value = get('data-reviewpoint');
+        document.getElementById('editBrandID').value   = get('data-brandid');
+
+        const p = document.getElementById('editPreview');
+        p.src = (get('data-imageurl')||'https://placehold.co/128x80');
+    });
+
+    // DELETE modalını doldur
+    const modalDelete = document.getElementById('modalDelete');
+    modalDelete?.addEventListener('show.bs.modal', e => {
+        const b = e.relatedTarget;
+        document.getElementById('delId').value   = b.getAttribute('data-id');
+        document.getElementById('delName').innerText = b.getAttribute('data-name');
+    });
+
+    // AJAX helper
+    async function ajaxSubmit(form, onOk){
+        const fd = new FormData(form);
+        const res = await fetch(form.action, {
+            method: form.method || 'POST',
+            body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (res.ok){ onOk?.(); }
+        else { alert('İşlem sırasında hata oluştu.'); }
+    }
+
+    // CREATE
+    document.getElementById('formCreate')?.addEventListener('submit', async ev=>{
+        ev.preventDefault();
+        const form = ev.currentTarget;
+        await ajaxSubmit(form, ()=>{
+            bootstrap.Modal.getInstance(document.getElementById('modalCreate'))?.hide();
+            location.reload(); // istersen burayı DOM'a satır ekleyecek şekilde düzenleyebilirsin
+        });
+    });
+
+    // EDIT
+    document.getElementById('formEdit')?.addEventListener('submit', async ev=>{
+        ev.preventDefault();
+        const form = ev.currentTarget;
+        await ajaxSubmit(form, ()=>{
+            // Basit DOM güncellemesi (tam yenilemeden):
+            const id = document.getElementById('editCarID').value;
+            const name = document.getElementById('editCarName').value;
+            const price = document.getElementById('editPrice').value;
+            const row = document.querySelector(`tr[data-row-id="${id}"]`);
+            row?.querySelector('.car-name')?.replaceChildren(document.createTextNode(name));
+            row?.children[3]?.replaceChildren(document.createTextNode(Number(price).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})));
+            bootstrap.Modal.getInstance(document.getElementById('modalEdit'))?.hide();
+        });
+    });
+
+    // DELETE
+    document.getElementById('formDelete')?.addEventListener('submit', async ev=>{
+        ev.preventDefault();
+        const form = ev.currentTarget;
+        const id = document.getElementById('delId').value;
+        await ajaxSubmit(form, ()=>{
+            document.querySelector(`tr[data-row-id="${id}"]`)?.remove();
+            bootstrap.Modal.getInstance(document.getElementById('modalDelete'))?.hide();
+        });
+    });
+
+})();
+</script>
+}

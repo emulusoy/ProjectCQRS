@@ -1,12 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectCQRS.CQRS.Commands.CarCommands;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
 using ProjectCQRS.CQRS.Handlers.CarHandlers;
 using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
+using ProjectCQRS.CQRS.Queries.CarQueries;
 using ProjectCQRS.CQRS.Queries.CategoryQueries;
+using ProjectCQRS.Entities;
 
 namespace ProjectCQRS.Controllers
 {
-    public class AdminController(GetCategoryByIdQueryHandler getCategoryByIdQueryHandler, GetCategoryQueryHandler getCategoryQueryHandler, CreateCategoryCommandHandler createCategoryCommandHandler, UpdateCategoryCommandHandler updateCategoryCommandHandler, RemoveCategoryCommandHandler removeCategoryCommandHandler) : Controller
+    public class AdminController(GetCategoryByIdQueryHandler getCategoryByIdQueryHandler,
+        GetCategoryQueryHandler getCategoryQueryHandler,
+        CreateCategoryCommandHandler createCategoryCommandHandler,
+        UpdateCategoryCommandHandler updateCategoryCommandHandler,
+        RemoveCategoryCommandHandler removeCategoryCommandHandler,
+        GetCarByIdQueryHandler getCarByIdQueryHandler,
+        GetCarQueryHandler getCarQueryHandler,
+        CreateCarCommandHandler createCarCommandHandler,
+        UpdateCarCommandHandler updateCarCommandHandler,
+        RemoveCarCommandHandler removeCarCommandHandler) : Controller
     {
         //category
         private readonly GetCategoryByIdQueryHandler _getCategoryByIdQueryHandler = getCategoryByIdQueryHandler;
@@ -15,8 +27,11 @@ namespace ProjectCQRS.Controllers
         private readonly UpdateCategoryCommandHandler _updateCategoryCommandHandler = updateCategoryCommandHandler;
         private readonly RemoveCategoryCommandHandler _removeCategoryCommandHandler = removeCategoryCommandHandler;
         //car
-        private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
-
+        private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler = getCarByIdQueryHandler;
+        private readonly GetCarQueryHandler _getCarQueryHandler = getCarQueryHandler;
+        private readonly CreateCarCommandHandler _createCarCommandHandler = createCarCommandHandler;
+        private readonly UpdateCarCommandHandler _updateCarCommandHandler = updateCarCommandHandler;
+        private readonly RemoveCarCommandHandler _removeCarCommandHandler = removeCarCommandHandler;
 
         public IActionResult Dashboard()
         {
@@ -55,34 +70,34 @@ namespace ProjectCQRS.Controllers
 
         //-------------------------------------------------------------------------car
 
-        //public async Task<IActionResult> CarList()
-        //{
-        //    var values = await _getCarQueryHandler.Handle();
-        //    return View(values);
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> CreateCar(CreateCarCommand command)
-        //{
-        //    await _createCarCommandHandler.Handle(command);
-        //    return RedirectToAction("CarList");
-        //}
-        //public async Task<IActionResult> DeleteCar(int id)
-        //{
-        //    await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
-        //    return RedirectToAction("CarList");
-        //}
-        //[HttpGet]
-        //public async Task<IActionResult> UpdateCar(int id)
-        //{
-        //    var values = await _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
+        public async Task<IActionResult> CarList()
+        {
+            var values = await _getCarQueryHandler.Handle();
+            return View(values);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCar(CreateCarCommand command)
+        {
+            await _createCarCommandHandler.Handle(command);
+            return RedirectToAction("CarList");
+        }
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
+            return RedirectToAction("CarList");
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdateCar(int id)
+        {
+            var values = await _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
 
-        //    return View(values);
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
-        //{
-        //    await _updateCarCommandHandler.Handle(command);
-        //    return RedirectToAction("CarList");
-        //}
+            return View(values);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
+        {
+            await _updateCarCommandHandler.Handle(command);
+            return RedirectToAction("CarList");
+        }
     }
 }
