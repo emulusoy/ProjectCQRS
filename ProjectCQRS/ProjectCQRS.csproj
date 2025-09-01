@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CQRS\Commands\BrandCommands\" />
+    <Folder Include="CQRS\Handlers\BrandHandlers\" />
+    <Folder Include="CQRS\Queries\BrandQueries\" />
+    <Folder Include="CQRS\Results\BrandResults\" />
     <Folder Include="Models\" />
   </ItemGroup>
 

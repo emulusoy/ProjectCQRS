@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
+using ProjectCQRS.CQRS.Handlers.CarHandlers;
 using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
 using ProjectCQRS.CQRS.Queries.CategoryQueries;
 
@@ -7,11 +8,15 @@ namespace ProjectCQRS.Controllers
 {
     public class AdminController(GetCategoryByIdQueryHandler getCategoryByIdQueryHandler, GetCategoryQueryHandler getCategoryQueryHandler, CreateCategoryCommandHandler createCategoryCommandHandler, UpdateCategoryCommandHandler updateCategoryCommandHandler, RemoveCategoryCommandHandler removeCategoryCommandHandler) : Controller
     {
+        //category
         private readonly GetCategoryByIdQueryHandler _getCategoryByIdQueryHandler = getCategoryByIdQueryHandler;
         private readonly GetCategoryQueryHandler _getCategoryQueryHandler = getCategoryQueryHandler;
         private readonly CreateCategoryCommandHandler _createCategoryCommandHandler = createCategoryCommandHandler;
         private readonly UpdateCategoryCommandHandler _updateCategoryCommandHandler = updateCategoryCommandHandler;
         private readonly RemoveCategoryCommandHandler _removeCategoryCommandHandler = removeCategoryCommandHandler;
+        //car
+        private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
+
 
         public IActionResult Dashboard()
         {
@@ -47,5 +52,37 @@ namespace ProjectCQRS.Controllers
             await _updateCategoryCommandHandler.Handle(command);
             return RedirectToAction("CategoryList");
         }
+
+        //-------------------------------------------------------------------------car
+
+        //public async Task<IActionResult> CarList()
+        //{
+        //    var values = await _getCarQueryHandler.Handle();
+        //    return View(values);
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> CreateCar(CreateCarCommand command)
+        //{
+        //    await _createCarCommandHandler.Handle(command);
+        //    return RedirectToAction("CarList");
+        //}
+        //public async Task<IActionResult> DeleteCar(int id)
+        //{
+        //    await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
+        //    return RedirectToAction("CarList");
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> UpdateCar(int id)
+        //{
+        //    var values = await _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
+
+        //    return View(values);
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
+        //{
+        //    await _updateCarCommandHandler.Handle(command);
+        //    return RedirectToAction("CarList");
+        //}
     }
 }
