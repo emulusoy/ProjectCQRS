@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using ProjectCQRS.CQRS.Commands.CarCommands;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
 using ProjectCQRS.CQRS.Handlers.BrandHandlers;
@@ -8,6 +9,7 @@ using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
 using ProjectCQRS.CQRS.Queries.CarQueries;
 using ProjectCQRS.CQRS.Queries.CategoryQueries;
 using ProjectCQRS.Entities;
+using ProjectCQRS.Models;
 
 namespace ProjectCQRS.Controllers
 {
@@ -47,8 +49,29 @@ namespace ProjectCQRS.Controllers
         private readonly RemoveBrandCommandHandler _removeBrandCommandHandler= removeBrandCommandHandler;
 
 
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
+
+            //    var client = new HttpClient();
+            //    var request = new HttpRequestMessage
+            //    {
+            //        Method = HttpMethod.Get,
+            //        RequestUri = new Uri("https://gas-price.p.rapidapi.com/europeanCountries"),
+            //        Headers =
+            //        {
+            //            { "x-rapidapi-key", "b9932ec3a5msh82539f9acf839e5p10b76cjsnd9ed723f6724" },
+            //{ "x-rapidapi-host", "gas-price.p.rapidapi.com" },
+            //        },
+            //    };
+            //    using (var response = await client.SendAsync(request))
+            //    {
+            //        response.EnsureSuccessStatusCode();
+            //        var body = await response.Content.ReadAsStringAsync();
+
+            //        var result = JsonConvert.DeserializeObject<GasPriceData>(body);
+            //        List<GasPriceVM> apiVM = result.Result;
+            //        return View(apiVM);
+            //    }
             return View();
         }
         //---------------------------------------------------------------------------------category
