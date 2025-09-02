@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectCQRS.CQRS.Commands.CarCommands;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
+using ProjectCQRS.CQRS.Handlers.BrandHandlers;
 using ProjectCQRS.CQRS.Handlers.CarHandlers;
 using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
 using ProjectCQRS.CQRS.Queries.CarQueries;
@@ -18,7 +20,12 @@ namespace ProjectCQRS.Controllers
         GetCarQueryHandler getCarQueryHandler,
         CreateCarCommandHandler createCarCommandHandler,
         UpdateCarCommandHandler updateCarCommandHandler,
-        RemoveCarCommandHandler removeCarCommandHandler) : Controller
+        RemoveCarCommandHandler removeCarCommandHandler,
+        GetBrandByIdQueryHandler getBrandByIdQueryHandler,
+        GetBrandQueryHandler getBrandQueryHandler,
+        CreateBrandCommandHandler createBrandCommandHandler,
+        UpdateBrandCommandHandler updateBrandCommandHandler,
+        RemoveBrandCommandHandler removeBrandCommandHandler) : Controller
     {
         //category
         private readonly GetCategoryByIdQueryHandler _getCategoryByIdQueryHandler = getCategoryByIdQueryHandler;
@@ -33,11 +40,18 @@ namespace ProjectCQRS.Controllers
         private readonly UpdateCarCommandHandler _updateCarCommandHandler = updateCarCommandHandler;
         private readonly RemoveCarCommandHandler _removeCarCommandHandler = removeCarCommandHandler;
 
+        private readonly GetBrandByIdQueryHandler _getBrandByIdQueryHandler= getBrandByIdQueryHandler;
+        private readonly GetBrandQueryHandler _getBrandQueryHandler= getBrandQueryHandler;
+        private readonly CreateBrandCommandHandler _createBrandCommandHandler= createBrandCommandHandler;
+        private readonly UpdateBrandCommandHandler _updateBrandCommandHandler= updateBrandCommandHandler;
+        private readonly RemoveBrandCommandHandler _removeBrandCommandHandler= removeBrandCommandHandler;
+
+
         public IActionResult Dashboard()
         {
             return View();
         }
-
+        //---------------------------------------------------------------------------------category
         public async Task<IActionResult> CategoryList()
         {
             var values = await _getCategoryQueryHandler.Handle();
@@ -73,6 +87,10 @@ namespace ProjectCQRS.Controllers
         public async Task<IActionResult> CarList()
         {
             var values = await _getCarQueryHandler.Handle();
+            var brands= await _getBrandQueryHandler.Handle();
+
+            ViewBag.BrandList = brands.Select(x=>new SelectListItem {Value =x.BrandID.ToString(),Text =x.Name}).ToList();
+
             return View(values);
         }
         [HttpPost]

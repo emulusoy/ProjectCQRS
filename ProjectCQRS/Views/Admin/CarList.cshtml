@@ -74,7 +74,7 @@
                                             data-carid="@item.CarID"
                                             data-carname="@item.CarName"
                                             data-imageurl="@item.ImageUrl"
-                                            data-price="@item.Price"
+                                            data-price="@item.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                             data-transmission="@item.Transmission"
                                             data-seat="@item.Seat"
                                             data-luggage="@item.Luggage"
@@ -167,9 +167,13 @@
                         <input name="Auto" class="form-control" placeholder="Örn: Otomatik / Manuel / Var / Yok" />
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">BrandID</label>
-                        <input name="BrandID" type="number" step="1" class="form-control" />
-                        @* İstersen ViewBag.BrandList ile <select> yapabilirsin *@
+                        <label class="form-label">Marka</label>
+                        <select name="BrandID" class="form-select" required>
+                            @foreach (var opt in (IEnumerable<SelectListItem>)ViewBag.BrandList)
+                            {
+                                <option value="@opt.Value">@opt.Text</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
@@ -244,8 +248,13 @@
                         <input name="Auto" id="editAuto" class="form-control" />
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Brand Name</label>
-                        <input name="BrandName" id="editBrandID" type="number" step="1" class="form-control" />
+                        <label class="form-label">Marka</label>
+                        <select name="BrandID" id="editBrandID" class="form-select" required>
+                            @foreach (var opt in (IEnumerable<SelectListItem>)ViewBag.BrandList)
+                            {
+                                <option value="@opt.Value">@opt.Text</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
@@ -311,7 +320,7 @@
         document.getElementById('editKm').value        = get('data-km');
         document.getElementById('editAuto').value      = get('data-auto');
         document.getElementById('editReviewPoint').value = get('data-reviewpoint');
-        document.getElementById('editBrandID').value   = get('data-brandid');
+        document.getElementById('editBrandID').value = get('data-brandid');
 
         const p = document.getElementById('editPreview');
         p.src = (get('data-imageurl')||'https://placehold.co/128x80');
@@ -360,6 +369,7 @@
             row?.querySelector('.car-name')?.replaceChildren(document.createTextNode(name));
             row?.children[3]?.replaceChildren(document.createTextNode(Number(price).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})));
             bootstrap.Modal.getInstance(document.getElementById('modalEdit'))?.hide();
+                    location.reload();
         });
     });
 

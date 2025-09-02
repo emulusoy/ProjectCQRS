@@ -13,8 +13,7 @@
         public string Fuel { get; set; }
         public string ModelYear { get; set; }
         public int Km { get; set; }
-        public string Auto { get; set; }
-
+        public string? Auto { get; set; }
         public int BrandID { get; set; }
     }
 }
