@@ -17,6 +17,7 @@ namespace ProjectCQRS.Context
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

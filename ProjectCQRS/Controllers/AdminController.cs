@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using ProjectCQRS.CQRS.Commands.CarCommands;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
+using ProjectCQRS.CQRS.Commands.ContactCommands;
 using ProjectCQRS.CQRS.Handlers.BrandHandlers;
 using ProjectCQRS.CQRS.Handlers.CarHandlers;
 using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
+using ProjectCQRS.CQRS.Handlers.ContactHandlers;
 using ProjectCQRS.CQRS.Queries.CarQueries;
 using ProjectCQRS.CQRS.Queries.CategoryQueries;
 using ProjectCQRS.Entities;
@@ -27,7 +29,11 @@ namespace ProjectCQRS.Controllers
         GetBrandQueryHandler getBrandQueryHandler,
         CreateBrandCommandHandler createBrandCommandHandler,
         UpdateBrandCommandHandler updateBrandCommandHandler,
-        RemoveBrandCommandHandler removeBrandCommandHandler) : Controller
+        RemoveBrandCommandHandler removeBrandCommandHandler,
+        CreateContactCommandHandler createContactCommandHandler,
+        GetContactQueryHandler getContactQueryHandler,
+        RemoveContactCommandHandler removeContactCommandHandler,
+        SetContactReadStatusCommandHandler setContactReadStatusCommandHandler) : Controller
     {
         //category
         private readonly GetCategoryByIdQueryHandler _getCategoryByIdQueryHandler = getCategoryByIdQueryHandler;
@@ -42,11 +48,16 @@ namespace ProjectCQRS.Controllers
         private readonly UpdateCarCommandHandler _updateCarCommandHandler = updateCarCommandHandler;
         private readonly RemoveCarCommandHandler _removeCarCommandHandler = removeCarCommandHandler;
 
-        private readonly GetBrandByIdQueryHandler _getBrandByIdQueryHandler= getBrandByIdQueryHandler;
-        private readonly GetBrandQueryHandler _getBrandQueryHandler= getBrandQueryHandler;
-        private readonly CreateBrandCommandHandler _createBrandCommandHandler= createBrandCommandHandler;
-        private readonly UpdateBrandCommandHandler _updateBrandCommandHandler= updateBrandCommandHandler;
-        private readonly RemoveBrandCommandHandler _removeBrandCommandHandler= removeBrandCommandHandler;
+        private readonly GetBrandByIdQueryHandler _getBrandByIdQueryHandler = getBrandByIdQueryHandler;
+        private readonly GetBrandQueryHandler _getBrandQueryHandler = getBrandQueryHandler;
+        private readonly CreateBrandCommandHandler _createBrandCommandHandler = createBrandCommandHandler;
+        private readonly UpdateBrandCommandHandler _updateBrandCommandHandler = updateBrandCommandHandler;
+        private readonly RemoveBrandCommandHandler _removeBrandCommandHandler = removeBrandCommandHandler;
+
+        private readonly CreateContactCommandHandler _createContactCommandHandler = createContactCommandHandler;
+        private readonly GetContactQueryHandler _getContactQueryHandler = getContactQueryHandler;
+        private readonly RemoveContactCommandHandler _removeContactCommandHandler = removeContactCommandHandler;
+        private readonly SetContactReadStatusCommandHandler _setContactReadStatusCommandHandler= setContactReadStatusCommandHandler;
 
 
         public async Task<IActionResult> Dashboard()
@@ -110,9 +121,9 @@ namespace ProjectCQRS.Controllers
         public async Task<IActionResult> CarList()
         {
             var values = await _getCarQueryHandler.Handle();
-            var brands= await _getBrandQueryHandler.Handle();
+            var brands = await _getBrandQueryHandler.Handle();
 
-            ViewBag.BrandList = brands.Select(x=>new SelectListItem {Value =x.BrandID.ToString(),Text =x.Name}).ToList();
+            ViewBag.BrandList = brands.Select(x => new SelectListItem { Value = x.BrandID.ToString(), Text = x.Name }).ToList();
 
             return View(values);
         }
@@ -139,6 +150,34 @@ namespace ProjectCQRS.Controllers
         {
             await _updateCarCommandHandler.Handle(command);
             return RedirectToAction("CarList");
+        }
+
+
+        //-------------------------------------------------------------------------contact!
+        //Hem ui Hem de admin icin calisan bir yer!
+
+        public async Task<IActionResult> ContactList()
+        {
+            var values = await _getContactQueryHandler.Handle();
+            return View(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateContact(CreateContactCommand command)
+        {
+            await _createContactCommandHandler.Handle(command);
+            return RedirectToAction("ContactList", "Admin");
+        }
+        public async Task<IActionResult> DeleteContact(int id)
+        {
+            await _removeContactCommandHandler.Handle(new RemoveContactCommand(id));
+            return RedirectToAction("ContactList");
+        }
+        [HttpPost]
+        public async Task<IActionResult> ReadStatus(int id)
+        {
+            await _setContactReadStatusCommandHandler.Handle(new SetContactReadStatusCommand(id));
+            return RedirectToAction("ContactList");
         }
     }
 }

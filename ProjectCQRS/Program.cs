@@ -2,6 +2,7 @@ using ProjectCQRS.Context;
 using ProjectCQRS.CQRS.Handlers.CarHandlers;
 using ProjectCQRS.CQRS.Handlers.CategoryHandlers;
 using ProjectCQRS.CQRS.Handlers.BrandHandlers;
+using ProjectCQRS.CQRS.Handlers.ContactHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,11 @@ builder.Services.AddScoped<UpdateBrandCommandHandler>();
 builder.Services.AddScoped<RemoveBrandCommandHandler>();
 builder.Services.AddScoped<GetBrandQueryHandler>();
 builder.Services.AddScoped<GetBrandByIdQueryHandler>();
+
+builder.Services.AddScoped<GetContactQueryHandler>();
+builder.Services.AddScoped<CreateContactCommandHandler>();
+builder.Services.AddScoped<RemoveContactCommandHandler>();
+builder.Services.AddScoped<SetContactReadStatusCommandHandler>();
 
 
 builder.Services.AddScoped<CQRSContext>();

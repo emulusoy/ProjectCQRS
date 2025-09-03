@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCQRS.Context;
 
@@ -11,9 +12,11 @@ using ProjectCQRS.Context;
 namespace ProjectCQRS.Migrations
 {
     [DbContext(typeof(CQRSContext))]
-    partial class CQRSContextModelSnapshot : ModelSnapshot
+    [Migration("20250903110837_add_newTable_Contact_edit")]
+    partial class add_newTable_Contact_edit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
