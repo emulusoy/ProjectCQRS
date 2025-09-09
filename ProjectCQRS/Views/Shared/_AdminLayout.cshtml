@@ -1,0 +1,293 @@
+﻿
+@{
+    Layout = null;
+}
+@using System
+
+@functions {
+    bool IsActive(string controller, string? action = null)
+    {
+        var c = ViewContext.RouteData.Values["controller"]?.ToString();
+        var a = ViewContext.RouteData.Values["action"]?.ToString();
+        var ok = string.Equals(c, controller, StringComparison.OrdinalIgnoreCase);
+        if (action is null) return ok;
+        return ok && string.Equals(a, action, StringComparison.OrdinalIgnoreCase);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] ?? "Yönetim") - RentX Admin</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <style>
+        :root{
+          --sidebar-w: 260px;
+          --sidebar-w-collapsed: 74px;
+        }
+        html, body { height: 100%; }
+        body{ background: var(--bs-body-bg); }
+
+        /* Sidebar */
+        .sidebar{
+          width: var(--sidebar-w);
+          min-height: 100vh;
+          position: sticky;
+          top: 0;
+          transition: width .2s ease, left .2s ease;
+          z-index: 1031;
+        }
+        .sidebar .nav-link{
+          border-radius: .5rem;
+          padding: .5rem .75rem;
+        }
+        .sidebar .nav-link.active{
+          color: var(--bs-body-bg);
+          background: var(--bs-primary);
+        }
+        .sidebar .nav-link i{ font-size: 1.1rem; }
+
+        /* Collapsed (desktop) */
+        body.sidebar-collapsed .sidebar{ width: var(--sidebar-w-collapsed); }
+        body.sidebar-collapsed .sidebar .brand-text,
+        body.sidebar-collapsed .sidebar .nav-link span,
+        body.sidebar-collapsed .sidebar .text-uppercase{ display: none !important; }
+
+        /* Mobile offcanvas */
+        @@media (max-width: 991.98px){
+          .sidebar{
+            position: fixed;
+            left: -100%;
+            bottom: 0;
+            height: 100vh;
+          }
+          body.sidebar-open .sidebar{
+            left: 0;
+            background: var(--bs-body-bg);
+          }
+          body.sidebar-open::after{
+            content:"";
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 1030;
+          }
+        }
+
+        /* Topbar */
+        .topbar{ z-index: 1032; }
+
+        /* Footer */
+        footer{ background: var(--bs-body-bg); }
+
+        /* Helpers */
+        .brand-badge{
+          display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center;
+          border-radius: .65rem; background: var(--bs-primary); color: #fff;
+        }
+    </style>
+
+    @RenderSection("Styles", required: false)
+</head>
+<body class="bg-body d-flex">
+
+    <aside class="sidebar bg-body-tertiary border-end">
+        <div class="d-flex align-items-center gap-2 px-3 py-3 border-bottom">
+            <span class="brand-badge"><i class="bi bi-steering-wheel"></i></span>
+            <span class="fw-semibold brand-text">emu Admin</span>
+        </div>
+
+        <nav class="px-2 py-3">
+            <div class="text-uppercase text-muted small px-3 mb-2">Genel</div>
+            <ul class="nav nav-pills flex-column gap-1">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Dashboard") ? "active" : "link-body-emphasis")"
+                       asp-controller="Admin" asp-action="Dashboard">
+                        <i class="bi bi-speedometer2"></i> <span>Gösterge Paneli</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="text-uppercase text-muted small px-3 mt-3 mb-2">Operasyon</div>
+            <ul class="nav nav-pills flex-column gap-1">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Vehicles") ? "active" : "link-body-emphasis")"
+                       asp-controller="Admin" asp-action="CarList">
+                        <i class="bi bi-car-front"></i> <span>Araçlar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Reservations") ? "active" : "link-body-emphasis")"
+                       asp-controller="Reservations" asp-action="Index">
+                        <i class="bi bi-calendar-check"></i> <span>Rezervasyonlar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Customers") ? "active" : "link-body-emphasis")"
+                       asp-controller="Customers" asp-action="Index">
+                        <i class="bi bi-people"></i> <span>Müşteriler</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Payments") ? "active" : "link-body-emphasis")"
+                       asp-controller="Payments" asp-action="Index">
+                        <i class="bi bi-credit-card"></i> <span>Ödemeler</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="text-uppercase text-muted small px-3 mt-3 mb-2">Yönetim</div>
+            <ul class="nav nav-pills flex-column gap-1">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Reports") ? "active" : "link-body-emphasis")"
+                       asp-controller="Reports" asp-action="Index">
+                        <i class="bi bi-graph-up"></i> <span>Raporlar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Settings") ? "active" : "link-body-emphasis")"
+                       asp-controller="Settings" asp-action="Index">
+                        <i class="bi bi-gear"></i> <span>Ayarlar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @(IsActive("Users") ? "active" : "link-body-emphasis")"
+                       asp-controller="Users" asp-action="Index">
+                        <i class="bi bi-shield-lock"></i> <span>Kullanıcı & Roller</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="flex-grow-1 d-flex flex-column min-vh-100">
+        <header class="topbar sticky-top border-bottom bg-body">
+            <div class="container-fluid py-2 d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary d-lg-none" id="btnSidebarMobile" title="Menü">
+                    <i class="bi bi-list"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex" id="btnSidebarToggle" title="Menüyü daralt/aç">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                </button>
+
+                <div class="flex-grow-1">
+                    <h1 class="h5 m-0">@ViewData["Title"]</h1>
+                </div>
+                <form class="d-none d-md-flex align-items-center" role="search" method="get" action="#">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="search" class="form-control" placeholder="Araç, müşteri, rezervasyon..." name="q" />
+                    </div>
+                </form>
+                <button class="btn btn-sm btn-outline-secondary" id="btnTheme" title="Karanlık/Aydınlık">
+                    <i class="bi bi-moon-stars"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary position-relative" id="btnNotify" title="Bildirimler">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Admin
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index"><i class="bi bi-person me-2"></i>Profil</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout"><i class="bi bi-box-arrow-right me-2"></i>Çıkış</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="container-fluid py-4">
+            @RenderSection("PageHeader", required: false)
+            @RenderBody()
+        </main>
+        <footer class="mt-auto border-top small text-muted">
+            <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
+                <span>© @DateTime.Now.Year emu Admin</span>
+                <span>.NET Core </span>
+            </div>
+        </footer>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastArea"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <script>
+        (function(){
+          const root = document.documentElement;
+          const body = document.body;
+
+          // Load persisted theme
+          const savedTheme = localStorage.getItem('admin.theme');
+          if(savedTheme === 'dark' || savedTheme === 'light'){
+            root.setAttribute('data-bs-theme', savedTheme);
+          }
+
+          // Load sidebar collapsed state (desktop)
+          if(localStorage.getItem('admin.sidebarCollapsed') === '1'){
+            body.classList.add('sidebar-collapsed');
+          }
+
+          // Theme toggle
+          document.getElementById('btnTheme')?.addEventListener('click', () => {
+            const now = root.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-bs-theme', now);
+            localStorage.setItem('admin.theme', now);
+            showToast('Tema: ' + (now === 'dark' ? 'Karanlık' : 'Aydınlık'));
+          });
+
+          // Sidebar collapse (desktop)
+          document.getElementById('btnSidebarToggle')?.addEventListener('click', () => {
+            body.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('admin.sidebarCollapsed', body.classList.contains('sidebar-collapsed') ? '1' : '0');
+          });
+
+          // Sidebar open/close (mobile)
+          document.getElementById('btnSidebarMobile')?.addEventListener('click', () => {
+            body.classList.toggle('sidebar-open');
+          });
+          // Close sidebar when clicking overlay (mobile)
+          document.addEventListener('click', (e) => {
+            if(body.classList.contains('sidebar-open')){
+              const sidebar = document.querySelector('.sidebar');
+              const within = sidebar && sidebar.contains(e.target);
+              const clickedToggle = e.target.closest('#btnSidebarMobile');
+              if(!within && !clickedToggle){ body.classList.remove('sidebar-open'); }
+            }
+          });
+
+          // Dummy notify
+          document.getElementById('btnNotify')?.addEventListener('click', () => {
+            showToast('3 yeni bildirim.');
+          });
+
+          // Simple toast
+          function showToast(msg){
+            const wrap = document.getElementById('toastArea');
+            const el = document.createElement('div');
+            el.className = 'toast align-items-center text-bg-primary border-0';
+            el.role = 'alert'; el.ariaLive = 'assertive'; el.ariaAtomic = 'true';
+            el.innerHTML = `
+              <div class="d-flex">
+                <div class="toast-body">${msg}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
+              </div>`;
+            wrap.appendChild(el);
+            const t = new bootstrap.Toast(el, { delay: 2000 });
+            t.show();
+            el.addEventListener('hidden.bs.toast', () => el.remove());
+          }
+        })();
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

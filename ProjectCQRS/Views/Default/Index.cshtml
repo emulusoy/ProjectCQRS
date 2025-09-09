@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <!-- Carousel Start -->
+@await Component.InvokeAsync("_ReservationComponent")
+    <!-- Carousel End -->
+    <!-- Features Start -->
+@await Component.InvokeAsync("_FeaturesComponent")
+    
+    <!-- Features End -->
+    <!-- About Start -->
+@await Component.InvokeAsync("_AboutComponent")
+
+    <!-- About End -->
+    <!-- Statistic Counter -->
+@await Component.InvokeAsync("_StatisticComponent")
+    <!-- Statistic Counter -->
+    <!-- Services Start -->
+@await Component.InvokeAsync("_ServicesComponent")
+
+    <!-- Services End -->
+<!-- Car categories Start -->
+@await Component.InvokeAsync("_CarCategoriesComponent")
+
+    <!-- Car categories End -->
+<!-- Car Steps Start -->
+@await Component.InvokeAsync("_CarStepsComponent")
+    <!-- Car Steps End -->
+    <!-- Blog Start -->
+@await Component.InvokeAsync("_BlogComponent")
+
+    <!-- Blog End -->
+    <!-- Banner Start -->
+@await Component.InvokeAsync("_SubBannerComponent")
+    <!-- Banner End -->
+    <!-- Customer Start -->
+@await Component.InvokeAsync("_CustomerComponent")
+    <!-- Customer End -->
+    <!-- Testimonial Start -->
+@await Component.InvokeAsync("_TestimonialComponent")
+
+@await Component.InvokeAsync("_ContactComponent")
+
+
+
+
+
+

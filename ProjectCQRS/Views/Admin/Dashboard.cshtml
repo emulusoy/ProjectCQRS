@@ -1,0 +1,103 @@
+﻿@model List<GasPriceVM>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+SAYFAYI SONRADAN ACARSIN!
+@* <style>
+    .price-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
+    }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .price-badge {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .gasoline-color {
+        color: #f25f4c;
+    }
+    /* Kırmızımsı */
+    .diesel-color {
+        color: #43aa8b;
+    }
+    /* Yeşile yakın */
+    .lpg-color {
+        color: #5c677d;
+    }
+    /* Koyu gri */
+
+    .card-title-country {
+        font-weight: 700;
+        color: #343a40;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <h2 class="mb-4">Avrupa Yakıt Fiyatları</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card price-card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                <h5 class="card-title-country mb-0">@item.country</h5>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-gas-pump me-2 gasoline-color"></i>
+                                    <strong>Benzin:</strong>
+                                </span>
+                                <span class="price-badge gasoline-color">
+                                    @item.gasoline @item.currency
+                                </span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-oil-can me-2 diesel-color"></i>
+                                    <strong>Dizel:</strong>
+                                </span>
+                                <span class="price-badge diesel-color">
+                                    @item.diesel @item.currency
+                                </span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-tint me-2 lpg-color"></i>
+                                    <strong>LPG:</strong>
+                                </span>
+                                <span class="price-badge lpg-color">
+                                    @item.lpg @item.currency
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col">
+                <div class="alert alert-warning" role="alert">
+                    Yakıt fiyatı verileri bulunamadı.
+                </div>
+            </div>
+        }
+    </div>
+</div> *@

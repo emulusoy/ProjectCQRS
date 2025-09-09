@@ -1,0 +1,260 @@
+﻿@model List<GetContactQueryResult>
+@{
+    ViewData["Title"] = "ContactList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var list = Model ?? new();
+    int total = list.Count;
+    int unread = list.Count(x => !x.IsRead);
+    int today = list.Count(x => x.CreatedAt.ToLocalTime().Date == DateTime.Now.Date);
+}
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+        <div>
+            <h1 class="h4 mb-1">Gelen Mesajlar</h1>
+            <div class="text-muted small">İletişim formundan gönderilen mesajlar</div>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <div class="input-group input-group-sm" style="min-width:260px">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <input id="txtSearch" type="search" class="form-control" placeholder="Ara: ad, e-posta, konu, mesaj...">
+            </div>
+            <div class="form-check ms-2">
+                <input class="form-check-input" type="checkbox" value="" id="onlyUnread">
+                <label class="form-check-label small" for="onlyUnread">Sadece okunmayanlar</label>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small">Toplam</div>
+                        <div class="h4 m-0">@total</div>
+                    </div>
+                    <i class="fa fa-inbox fa-2x text-primary opacity-75"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small">Okunmadı</div>
+                        <div class="h4 m-0">@unread</div>
+                    </div>
+                    <i class="fa fa-envelope-open-text fa-2x text-warning opacity-75"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small">Bugün</div>
+                        <div class="h4 m-0">@today</div>
+                    </div>
+                    <i class="fa fa-calendar-day fa-2x text-success opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle m-0" id="tblMessages">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:80px">#</th>
+                        <th style="width:160px">Tarih</th>
+                        <th>Gönderen</th>
+                        <th style="width:220px">E-posta / Tel</th>
+                        <th>Konu</th>
+                        <th style="width:120px">Durum</th>
+                        <th style="width:220px" class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var m in list.OrderByDescending(x => x.CreatedAt))
+                {
+                    <tr data-row-id="@m.ContactId"
+                        data-search="@($"{m.Name} {m.Email} {m.Phone} {m.Subject} {m.Project} {m.Message}")"
+                        data-isread="@(m.IsRead ? "1" : "0")">
+                        <td>@m.ContactId</td>
+                        <td>@m.CreatedAt.ToLocalTime().ToString("g")</td>
+                        <td>
+                            <div class="fw-semibold">@m.Name</div>
+                            @if (!string.IsNullOrWhiteSpace(m.Project))
+                            {
+                                <div class="small text-muted">Proj: @m.Project</div>
+                            }
+                        </td>
+                        <td>
+                            <div class="small"><i class="fa fa-envelope me-1"></i>@m.Email</div>
+
+                                <div class="small"><i class="fa fa-phone me-1"></i>@m.Phone</div>
+                            
+                        </td>
+                        <td class="text-truncate" style="max-width:280px" title="@m.Subject">@m.Subject</td>
+                        <td>
+                            @if (m.IsRead)
+                            {
+                                <span class="badge rounded-pill text-bg-success">Okundu</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-pill text-bg-secondary">Okunmadı</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    data-view
+                                    data-id="@m.ContactId"
+                                    data-name="@m.Name"
+                                    data-email="@m.Email"
+                                    data-phone="@m.Phone"
+                                    data-subject="@m.Subject"
+                                    data-project="@m.Project"
+                                    data-message="@m.Message"
+                                    data-date="@m.CreatedAt.ToLocalTime().ToString("f")"
+                                    data-isread="@(m.IsRead ? "1" : "0")"
+                                    data-bs-toggle="modal" data-bs-target="#modalView">
+                                <i class="fa fa-eye me-1"></i> Görüntüle
+                            </button>
+                            @if (!m.IsRead)
+                            {
+                                    <form asp-action="ReadStatus" asp-controller="Admin" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@m.ContactId" />
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">
+                                        <i class="fa fa-check me-1"></i> Okundu
+                                    </button>
+                                </form>
+                            }
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    data-del data-id="@m.ContactId" data-name="@m.Name" data-subject="@m.Subject"
+                                    data-bs-toggle="modal" data-bs-target="#modalDelete">
+                                <i class="fa fa-trash me-1"></i> Sil
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!list.Any())
+                {
+                    <tr><td colspan="7" class="text-center text-muted py-5">Kayıt yok.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalView" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+            <h5 class="modal-title" id="mvSubject">—</h5>
+            <div class="small text-muted" id="mvMeta">—</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+            <div class="fw-semibold">Mesaj</div>
+            <div class="border rounded p-3 bg-light" id="mvMessage" style="white-space:pre-wrap">—</div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-4"><div class="small text-muted">Gönderen</div><div id="mvName">—</div></div>
+            <div class="col-md-4"><div class="small text-muted">E-posta</div><div id="mvEmail">—</div></div>
+            <div class="col-md-4"><div class="small text-muted">Telefon</div><div id="mvPhone">—</div></div>
+            <div class="col-md-4"><div class="small text-muted">Proje</div><div id="mvProject">—</div></div>
+            <div class="col-md-4"><div class="small text-muted">Tarih</div><div id="mvDate">—</div></div>
+            <div class="col-md-4"><div class="small text-muted">Durum</div><div id="mvStatus">—</div></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+                <form id="formMarkReadModal" asp-action="ReadStatus" asp-controller="Admin" method="post" class="me-auto">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" id="mvId" />
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-check me-1"></i> Okundu işaretle
+            </button>
+        </form>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form asp-action="DeleteContact" asp-controller="Admin" method="post" class="modal-content">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" id="delId" />
+        <div class="modal-header">
+            <h5 class="modal-title">Silme Onayı</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <p class="mb-2">Aşağıdaki mesajı silmek istediğinize emin misiniz?</p>
+            <div class="p-2 bg-light rounded">
+                <div id="delWho" class="fw-semibold">—</div>
+                <div id="delSubject" class="small text-muted">—</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+            <button class="btn btn-danger" type="submit"><i class="fa fa-trash me-1"></i> Sil</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  const txt = document.getElementById('txtSearch');
+  const onlyUnread = document.getElementById('onlyUnread');
+  const rows = Array.from(document.querySelectorAll('#tblMessages tbody tr'));
+
+  function applyFilter(){
+    const q = (txt.value || '').toLowerCase().trim();
+    const unreadOnly = onlyUnread.checked;
+    rows.forEach(r=>{
+      const hay = (r.dataset.search || '').toLowerCase();
+      const isUnread = r.dataset.isread === '0';
+      let show = true;
+      if (q && !hay.includes(q)) show = false;
+      if (unreadOnly && !isUnread) show = false;
+      r.classList.toggle('d-none', !show);
+    });
+  }
+  txt?.addEventListener('input', applyFilter);
+  onlyUnread?.addEventListener('change', applyFilter);
+  applyFilter();
+  document.querySelectorAll('[data-view]')?.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const g = (k)=> btn.getAttribute(k) || '';
+      document.getElementById('mvId').value = g('data-id');
+      document.getElementById('mvSubject').textContent = g('data-subject') || '(Konu yok)';
+      document.getElementById('mvMessage').textContent = g('data-message') || '-';
+      document.getElementById('mvName').textContent = g('data-name') || '-';
+      document.getElementById('mvEmail').textContent = g('data-email') || '-';
+      document.getElementById('mvPhone').textContent = g('data-phone') || '-';
+      document.getElementById('mvProject').textContent = g('data-project') || '-';
+      document.getElementById('mvDate').textContent = g('data-date') || '-';
+      const isRead = g('data-isread') === '1';
+      document.getElementById('mvStatus').innerHTML = isRead
+        ? '<span class="badge rounded-pill text-bg-success">Okundu</span>'
+        : '<span class="badge rounded-pill text-bg-secondary">Okunmadı</span>';
+      document.querySelector('#formMarkReadModal button').disabled = isRead;
+    });
+  });
+
+  document.querySelectorAll('[data-del]')?.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-id');
+      document.getElementById('delId').value = id;
+      document.getElementById('delWho').textContent = btn.getAttribute('data-name') || '-';
+      document.getElementById('delSubject').textContent = btn.getAttribute('data-subject') || '-';
+    });
+  });
+})();
+</script>
