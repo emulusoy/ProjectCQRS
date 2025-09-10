@@ -1,4 +1,4 @@
-# 🚗 Rent A Car — .NET Core + CQRS (Gemini & RapidAPI Entegre)
+# Projede Git hatalari var eger tam haline erismek istiyorsaniz lutfen iletisime gecin 🚗 Rent A Car — .NET Core + CQRS (Gemini & RapidAPI Entegre)
 
 Araç kiralama akışını uçtan uca gösteren örnek proje.  
 Kullanıcı tarafında **şehir/araç seçimi → özet** (Gemini ile mesafe/süre/yakıt + **yakıt TL maliyeti** + **toplam tutar**),  
