@@ -1,93 +1,69 @@
-Rent A Car — .NET Core + CQRS (Gemini & RapidAPI Entegre)
+## Rent A Car — .NET Core + CQRS (Gemini & RapidAPI Entegre)
 
 Araç kiralama akışını uçtan uca gösteren örnek proje.
 Kullanıcı tarafında şehir/araç seçimi → özet (Gemini ile mesafe/süre/yakıt + yakıt TL maliyeti + toplam tutar),
 yönetim tarafında ise modal tabanlı CRUD ve Dashboard (Avrupa yakıt fiyatları, son yorumlar, öne çıkan araçlar) bulunur.
 İletişim formu DB’ye kaydolur ve Gemini destekli otomatik e-posta yanıtı gönderilir.
 
-İçerik
+*Akıllı seçim kutuları (aranabilir/kaydırılabilir) ile Araç & Şehir seçimi
 
-Özellikler
+#Reservation/Summary:
 
-Teknolojiler
+*Gemini ile tahmini mesafe (km), süre (saat) ve yakıt tüketimi (L/100km)
 
-Ekranlar
+*2025 Eylül Türkiye benzin fiyatına (konfigürasyondan) göre yakıt TL maliyeti
 
-Kurulum
+*Gün sayısı × günlük fiyat → kiralama tutarı ve toplam maliyet
 
-Yapı & Mimari
+*Araç detayında kullanıcı yorumları ve ortalama puan
 
-Konfigürasyon
+#Yönetim (Admin)
 
-Sık Karşılaşılan Sorunlar
+*Modal tabanlı CRUD (ör: Kategori, Araç)
 
-Yol Haritası
+#Dashboard:
 
-Lisans
+*RapidAPI’den Avrupa yakıt fiyatları
 
-Özellikler
+*Son yorumlar listesi
 
-Kullanıcı (Ön Yüz)
+*Öne çıkan araçlar (büyük kartlar)
 
-Akıllı seçim kutuları (aranabilir/kaydırılabilir) ile Araç & Şehir seçimi
+*Mini istatistikler (araç sayısı, aktif rezervasyon, ortalama puan)
 
-Reservation/Summary:
+#İletişim & Otomatik Yanıt
 
-Gemini ile tahmini mesafe (km), süre (saat) ve yakıt tüketimi (L/100km)
+*İletişim formu gönderimleri veritabanına kaydolur
 
-2025 Eylül Türkiye benzin fiyatına (konfigürasyondan) göre yakıt TL maliyeti
+*Gemini ile içeriğe uygun otomatik e-posta yanıtı (Gmail SMTP)
 
-Gün sayısı × günlük fiyat → kiralama tutarı ve toplam maliyet
+#Teknolojiler
 
-Araç detayında kullanıcı yorumları ve ortalama puan
+*.NET Core / ASP.NET MVC
 
-Yönetim (Admin)
+*EF Core, CQRS (Command/Query/Handler)
 
-Modal tabanlı CRUD (ör: Kategori, Araç)
+*Google Gemini 
 
-Dashboard:
+*RapidAPI — gas-price.p.rapidapi.com
 
-RapidAPI’den Avrupa yakıt fiyatları
+*Gmail SMTP (Uygulama şifresiyle)
 
-Son yorumlar listesi
+*Bootstrap 5, Font Awesome
 
-Öne çıkan araçlar (büyük kartlar)
+#Ekranlar
 
-Mini istatistikler (araç sayısı, aktif rezervasyon, ortalama puan)
+*Home → Header rezervasyon kutusu (Car/City seçimleri, tarih)
 
-İletişim & Otomatik Yanıt
+*Car/Index → Araç kartları grid
 
-İletişim formu gönderimleri veritabanına kaydolur
+*Reservation/Summary → Gemini tahminleri + yakıt TL, kiralama ve toplam
 
-Gemini ile içeriğe uygun otomatik e-posta yanıtı (Gmail SMTP)
+*Admin/Dashboard → Gas price kartları, yorumlar, öne çıkanlar
 
-Teknolojiler
+*Admin/*List → Modal CRUD sayfaları (Kategori, Araç, vs.)
 
-.NET Core / ASP.NET MVC
-
-EF Core, CQRS (Command/Query/Handler)
-
-Google Gemini API (Generative Language)
-
-RapidAPI — gas-price.p.rapidapi.com
-
-Gmail SMTP (Uygulama şifresiyle)
-
-Bootstrap 5, Font Awesome
-
-Ekranlar
-
-Home → Header rezervasyon kutusu (Car/City seçimleri, tarih)
-
-Car/Index → Araç kartları grid
-
-Reservation/Summary → Gemini tahminleri + yakıt TL, kiralama ve toplam
-
-Admin/Dashboard → Gas price kartları, yorumlar, öne çıkanlar
-
-Admin/*List → Modal CRUD sayfaları (Kategori, Araç, vs.)
-
-Contact → Form gönderimi → DB + otomatik e-posta
+*Contact → Form gönderimi → DB + otomatik e-posta
 
 
 
