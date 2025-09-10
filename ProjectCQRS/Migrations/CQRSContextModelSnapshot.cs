@@ -115,6 +115,23 @@ namespace ProjectCQRS.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("ProjectCQRS.Entities.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("ProjectCQRS.Entities.Contact", b =>
                 {
                     b.Property<int>("ContactId")
@@ -142,8 +159,9 @@ namespace ProjectCQRS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Project")
                         .IsRequired()

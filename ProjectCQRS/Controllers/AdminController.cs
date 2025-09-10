@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using ProjectCQRS.Context;
 using ProjectCQRS.CQRS.Commands.CarCommands;
 using ProjectCQRS.CQRS.Commands.CategoryCommands;
 using ProjectCQRS.CQRS.Commands.ContactCommands;
@@ -33,7 +35,8 @@ namespace ProjectCQRS.Controllers
         CreateContactCommandHandler createContactCommandHandler,
         GetContactQueryHandler getContactQueryHandler,
         RemoveContactCommandHandler removeContactCommandHandler,
-        SetContactReadStatusCommandHandler setContactReadStatusCommandHandler) : Controller
+        SetContactReadStatusCommandHandler setContactReadStatusCommandHandler,
+        CQRSContext ctx) : Controller
     {
         //category
         private readonly GetCategoryByIdQueryHandler _getCategoryByIdQueryHandler = getCategoryByIdQueryHandler;
@@ -57,32 +60,65 @@ namespace ProjectCQRS.Controllers
         private readonly CreateContactCommandHandler _createContactCommandHandler = createContactCommandHandler;
         private readonly GetContactQueryHandler _getContactQueryHandler = getContactQueryHandler;
         private readonly RemoveContactCommandHandler _removeContactCommandHandler = removeContactCommandHandler;
-        private readonly SetContactReadStatusCommandHandler _setContactReadStatusCommandHandler= setContactReadStatusCommandHandler;
-
+        private readonly SetContactReadStatusCommandHandler _setContactReadStatusCommandHandler = setContactReadStatusCommandHandler;
+        private readonly CQRSContext _ctx = new CQRSContext();
 
         public async Task<IActionResult> Dashboard()
         {
+            // --- GAS PRICE (KENDİ ÇALIŞAN KODUN) ---
+            //List<GasPriceVM> apiVM;
+            //using (var client = new HttpClient())
+            //using (var request = new HttpRequestMessage(HttpMethod.Get, "https://gas-price.p.rapidapi.com/europeanCountries"))
+            //{
+            //    request.Headers.Add("x-rapidapi-key", "b9932ec3a5msh82539f9acf839e5p10b76cjsnd9ed723f6724");
+            //    request.Headers.Add("x-rapidapi-host", "gas-price.p.rapidapi.com");
 
-            //    var client = new HttpClient();
-            //    var request = new HttpRequestMessage
-            //    {
-            //        Method = HttpMethod.Get,
-            //        RequestUri = new Uri(""),
-            //        Headers =
-            //        {
-            //            { "x-rapidapi-key", "" },
-            //{ "x-rapidapi-host", "gas-price.p.rapidapi.com" },
-            //        },
-            //    };
-            //    using (var response = await client.SendAsync(request))
-            //    {
-            //        response.EnsureSuccessStatusCode();
-            //        var body = await response.Content.ReadAsStringAsync();
+            //    using var response = await client.SendAsync(request);
+            //    response.EnsureSuccessStatusCode();
+            //    var body = await response.Content.ReadAsStringAsync();
 
-            //        var result = JsonConvert.DeserializeObject<GasPriceData>(body);
-            //        List<GasPriceVM> apiVM = result.Result;
-            //        return View(apiVM);
-            //    }
+            //    var result = JsonConvert.DeserializeObject<GasPriceData>(body);
+            //    apiVM = result?.Result ?? new List<GasPriceVM>();
+            //}
+
+
+            //ViewBag.Stats = new
+            //{
+            //    CarCount = await _ctx.Cars.CountAsync(),
+            //    AvgRating = await _ctx.Reviews.AnyAsync() ? await _ctx.Reviews.AverageAsync(r => r.Point) : 0
+            //};
+
+            //ViewBag.Me = new { Name = "Emu Ulusoy", Role = "Admin", Email = "you@domain.com" };
+
+            //ViewBag.Reviews = await _ctx.Reviews
+            //    .OrderByDescending(r => r.ReviewID).Take(6)
+            //    .Select(r => new
+            //    {
+            //        User = r.User != null ? r.User.Name : ("Kullanıcı #" + r.UserID),
+            //        Car = r.Car.CarName,
+            //        Point = r.Point,
+            //        Comment = r.Comment,
+            //        Date = (DateTime?)EF.Property<DateTime>(r, "CreatedAt")
+            //    }).ToListAsync();
+
+            //ViewBag.TopCars = await _ctx.Cars
+            //    .Include(c => c.Brand) // Brand.Name kullanıyorsan gerekli
+            //    .OrderBy(c => c.Price).Take(4)
+            //    .Select(c => new
+            //    {
+            //        Name = c.CarName,
+            //        ImageUrl = c.ImageUrl,
+            //        PricePerDay = c.Price,
+            //        Brand = c.Brand != null ? c.Brand.Name : "",
+            //        Transmission = c.Transmission,
+            //        Fuel = c.Fuel,
+            //        Seat = c.Seat,
+            //        Luggage = c.Luggage,
+            //        ModelYear = c.ModelYear,
+            //        Km = c.Km,
+            //        Rating = (double?)_ctx.Reviews.Where(r => r.CarID == c.CarID).Average(r => (double?)r.Point)
+            //    }).ToListAsync();
+
             return View();
         }
         //---------------------------------------------------------------------------------category

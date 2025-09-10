@@ -1,0 +1,97 @@
+﻿@model ReservationSummaryVM
+@using System.Globalization
+@{
+    ViewData["Title"] = "Reservation Summary";
+    var tr = CultureInfo.GetCultureInfo("tr-TR");
+}
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <img src="@Model.ImageUrl" class="card-img-top" style="aspect-ratio:16/10;object-fit:cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.CarName</h5>
+                    <p class="card-text text-muted mb-0">
+                        @Model.PricePerDay.ToString("N2", tr) TL / gün
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">@Model.Pickup → @Model.Dropoff (@Model.Days gün)</h5>
+
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item">Mesafe: <strong>@Model.DistanceKm.ToString("N0", tr) km</strong></li>
+                        <li class="list-group-item">Süre: <strong>@Model.DurationHours.ToString("N1", tr) saat</strong></li>
+                        <li class="list-group-item">Ort. tüketim: <strong>@Model.AvgConsumptionLPer100Km.ToString("N1", tr) L/100km</strong></li>
+                        <li class="list-group-item">Tahmini yakıt: <strong>@Model.FuelNeededLiters.ToString("N1", tr) L</strong></li>
+                        <li class="list-group-item">
+                            Benzin (2025 Eylül): <strong>@Model.FuelPricePerLiterTRY.ToString("N2", tr) TL/L</strong>
+                            <small class="text-muted d-block">Kaynaklara göre Türkiye/İstanbul ~52.8–53.7 TL/L bandı.</small>
+                        </li>
+                        <li class="list-group-item">Yakıt maliyeti: <strong>@Model.FuelCostTRY.ToString("N2", tr) TL</strong></li>
+                        <li class="list-group-item">Kiralama ücreti (@Model.Days gün): <strong>@Model.RentalCost.ToString("N2", tr) TL</strong></li>
+                        <li class="list-group-item">
+                            Toplam (@Model.Days gün): <strong>@Model.TotalSelectedDaysTRY.ToString("N2", tr) TL</strong>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-primary">5 Gün Toplam (Araç + Yakıt):</span>
+                            <strong class="text-primary">@Model.TotalFiveDaysTRY.ToString("N2", tr) TL</strong>
+                            <small class="text-muted d-block">= 5 × @Model.PricePerDay.ToString("N2", tr) TL + @Model.FuelCostTRY.ToString("N2", tr) TL</small>
+                        </li>
+                    </ul>
+
+                    <a href="/" class="btn btn-outline-secondary me-2">Geri</a>
+                    <a href="/Reservation/Confirm" class="btn btn-primary">Rezervasyonu Tamamla</a>
+                </div>
+            </div>
+        </div>
+        @* --- Yorumlar --- *@
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <h5 class="mb-0">Yorumlar</h5>
+                    <span class="ms-2 text-muted">(@Model.ReviewCount adet, ort.: @Model.AveragePoint.ToString("0.0") / 5)</span>
+                </div>
+
+                @if (Model.Reviews == null || !Model.Reviews.Any())
+                {
+                    <p class="text-muted mb-0">Bu araç için henüz yorum bulunmuyor.</p>
+                }
+                else
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var r in Model.Reviews)
+                        {
+                            var pt = Math.Min(5, Math.Max(0, r.Point));
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong>@r.UserDisplay</strong>
+                                    <span>
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= pt)
+                                            {
+                                                <i class="fas fa-star text-warning"></i>
+                                            }
+                                            else
+                                            {
+
+                                                <i class="far fa-star text-muted"></i>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                                <div class="text-body">@r.Comment</div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

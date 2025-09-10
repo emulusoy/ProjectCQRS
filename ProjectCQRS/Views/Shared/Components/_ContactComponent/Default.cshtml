@@ -6,7 +6,8 @@
 <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
     <div class="bg-secondary p-5 rounded">
         <h4 class="text-primary mb-4">Send Your Message</h4>
-                    <form method="post" asp-action="CreateContact" asp-controller="Admin">
+                    <form method="post" asp-action="Index" asp-controller="Default">
+                        @Html.AntiForgeryToken()
             <div class="row g-4">
                 <div class="col-lg-12 col-xl-6">
                     <div class="form-floating">
@@ -52,6 +53,22 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="msgOkModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4 text-center">
+        <div class="mb-3">
+          <i class="fas fa-check-circle fa-3x text-success"></i>
+        </div>
+        <h5 class="mb-2">Mesajınız gönderildi</h5>
+        <p class="text-muted mb-0">En kısa sürede size dönüş yapacağız. Teşekkürler!</p>
+      </div>
+      <div class="modal-footer border-0 pt-0 justify-content-center">
+        <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Tamam</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="col-12 col-xl-1 wow fadeInUp" data-wow-delay="0.3s">
     <div class="d-flex flex-xl-column align-items-center justify-content-center">
         <a class="btn btn-xl-square btn-light rounded-circle mb-0 mb-xl-4 me-4 me-xl-0" href=""><i class="fab fa-facebook-f"></i></a>
@@ -93,4 +110,17 @@
 </div>
 </div>
 </div>
-</div>
+</div>@if (TempData["ContactSuccess"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var el = document.getElementById('msgOkModal');
+          if (window.bootstrap && el) {
+            new bootstrap.Modal(el, { backdrop: 'static' }).show();
+          } else {
+            // Bootstrap yüklenmemişse kibar fallback
+            alert('Mesajınız gönderildi. Teşekkürler!');
+          }
+        });
+    </script>
+}

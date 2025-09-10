@@ -1,0 +1,147 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\controllers\\defaultcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\controllers\\defaultcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\views\\default\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\views\\default\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\viewcomponents\\default\\_statisticcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\viewcomponents\\default\\_statisticcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\views\\admin\\carlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\views\\admin\\carlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|c:\\users\\emu\\source\\repos\\projectcqrs\\projectcqrs\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9FA87E99-9823-476C-B59C-4DFB8EF27C55}|ProjectCQRS\\ProjectCQRS.csproj|solutionrelative:projectcqrs\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{f2bd8fb8-fc94-3dae-a733-fd993c73cc87}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Views\\Admin\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "ProjectCQRS\\Views\\Admin\\Dashboard.cshtml",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-10T12:06:24.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "ProjectCQRS\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAwwFAAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-10T12:06:07.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DefaultController.cs",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Controllers\\DefaultController.cs",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Controllers\\DefaultController.cs",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Controllers\\DefaultController.cs",
+              "RelativeToolTip": "ProjectCQRS\\Controllers\\DefaultController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-10T12:06:04.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Default\\Index.cshtml",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Views\\Default\\Index.cshtml",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Default\\Index.cshtml",
+              "RelativeToolTip": "ProjectCQRS\\Views\\Default\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-10T12:06:01.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_StatisticComponent.cs",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\ViewComponents\\Default\\_StatisticComponent.cs",
+              "RelativeDocumentMoniker": "ProjectCQRS\\ViewComponents\\Default\\_StatisticComponent.cs",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\ViewComponents\\Default\\_StatisticComponent.cs",
+              "RelativeToolTip": "ProjectCQRS\\ViewComponents\\Default\\_StatisticComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-10T12:00:16.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CarList.cshtml",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Admin\\CarList.cshtml",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Views\\Admin\\CarList.cshtml",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Admin\\CarList.cshtml",
+              "RelativeToolTip": "ProjectCQRS\\Views\\Admin\\CarList.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-10T11:52:38.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "ProjectCQRS\\Views\\Shared\\_AdminLayout.cshtml",
+              "ToolTip": "C:\\Users\\eMu\\source\\repos\\ProjectCQRS\\ProjectCQRS\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeToolTip": "ProjectCQRS\\Views\\Shared\\_AdminLayout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-10T11:52:12.385Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

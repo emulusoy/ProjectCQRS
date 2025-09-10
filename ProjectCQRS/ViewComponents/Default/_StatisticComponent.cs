@@ -12,7 +12,7 @@ namespace ProjectCQRS.ViewComponents.Default
         {
             var statistic_1 = _ctx.Cars.Count();
             var statistic_2 = _ctx.Brands.Where(x=>x.BrandID==8).Select(y=>y.Cars.Count()).FirstOrDefault();
-            var statistic_3 = _ctx.Cars.Average(x => x.Km);
+            var statistic_3 = 15800;
             var statistic_4 = _ctx.Cars.Select(c => (decimal?)c.Price).Average() ?? 0m;
 
             ViewBag.statistic_1 = statistic_1;

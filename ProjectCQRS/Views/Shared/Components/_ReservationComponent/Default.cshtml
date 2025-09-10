@@ -1,4 +1,21 @@
-﻿<div class="header-carousel">
+﻿@model ReservationBoxVM
+@using System.Globalization
+@{
+    var tr = new CultureInfo("tr-TR");
+    string[] top5City = { "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya" };
+    var comp = StringComparer.Create(tr, true);
+    var popularCities = Model.Cities.Where(c => top5City.Contains(c, comp)).ToList();
+    var otherCities = Model.Cities.Where(c => !top5City.Contains(c, comp)).OrderBy(c => c, StringComparer.Create(tr, false)).ToList();
+
+    var popularCars = Model.CarNames.Take(5).ToList();
+    var otherCars = Model.CarNames.Skip(5).OrderBy(c => c, StringComparer.Create(tr, false)).ToList();
+}
+
+<!-- SAYFA BAŞINDA: Car meta sözlüğünü göm -->
+<script>
+    window.CAR_META = @Html.Raw(ViewBag.CarMetaJson ?? "{}");
+</script>
+<div class="header-carousel">
     <div id="carouselId" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <ol class="carousel-indicators">
             <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active" aria-current="true" aria-label="First slide"></li>
@@ -10,91 +27,256 @@
                 <div class="carousel-caption">
                     <div class="container py-4">
                         <div class="row g-5">
-                            <div class="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style="animation-delay: 1s;">
+                            <div class="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style="animation-delay:1s;">
                                 <div class="bg-secondary rounded p-5">
                                     <h4 class="text-white mb-4">CONTINUE CAR RESERVATION</h4>
-                                    <form>
-                                        <div class="row g-3">
-                                            <div class="col-12">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Select Your Car type</option>
-                                                    <option value="1">VW Golf VII</option>
-                                                    <option value="2">Audi A1 S-Line</option>
-                                                    <option value="3">Toyota Camry</option>
-                                                    <option value="4">BMW 320 ModernLine</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="input-group">
-                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
-                                                        <span class="fas fa-map-marker-alt"></span> <span class="ms-1">Pick Up</span>
-                                                    </div>
-                                                    <input class="form-control" type="text" placeholder="Enter a City or Airport" aria-label="Enter a City or Airport">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <a href="#" class="text-start text-white d-block mb-2">Need a different drop-off location?</a>
-                                                <div class="input-group">
-                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
-                                                        <span class="fas fa-map-marker-alt"></span><span class="ms-1">Drop off</span>
-                                                    </div>
-                                                    <input class="form-control" type="text" placeholder="Enter a City or Airport" aria-label="Enter a City or Airport">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="input-group">
-                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
-                                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Pick Up</span>
-                                                    </div>
-                                                    <input class="form-control" type="date">
-                                                    <select class="form-select ms-3" aria-label="Default select example">
-                                                        <option selected>12:00AM</option>
-                                                        <option value="1">1:00AM</option>
-                                                        <option value="2">2:00AM</option>
-                                                        <option value="3">3:00AM</option>
-                                                        <option value="4">4:00AM</option>
-                                                        <option value="5">5:00AM</option>
-                                                        <option value="6">6:00AM</option>
-                                                        <option value="7">7:00AM</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="input-group">
-                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
-                                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Drop off</span>
-                                                    </div>
-                                                    <input class="form-control" type="date">
-                                                    <select class="form-select ms-3" aria-label="Default select example">
-                                                        <option selected>12:00AM</option>
-                                                        <option value="1">1:00AM</option>
-                                                        <option value="2">2:00AM</option>
-                                                        <option value="3">3:00AM</option>
-                                                        <option value="4">4:00AM</option>
-                                                        <option value="5">5:00AM</option>
-                                                        <option value="6">6:00AM</option>
-                                                        <option value="7">7:00AM</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <a class="btn btn-light w-100 py-2" href="/Car/Index/">Book Now</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 d-none d-lg-flex fadeInRight animated" data-animation="fadeInRight" data-delay="1s" style="animation-delay: 1s;">
-                                <div class="text-start">
-                                    <h1 class="display-5 text-white">Get 15% off your rental Plan your trip now</h1>
-                                    <p>Treat yourself in USA</p>
-                                </div>
-                            </div>
-                        </div>
+<form method="get" action="/Reservation/Summary">
+
+    <div class="row g-3">
+
+        <!-- CAR picker -->
+        <div class="col-12">
+            <div class="input-group position-relative smart-picker" data-name="car">
+                <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                    <span class="fas fa-car"></span><span class="ms-1">Car</span>
+                </div>
+                <input class="form-control smart-input" name="car" autocomplete="off" placeholder="Araç yazın veya seçin">
+                <div class="smart-dropdown card shadow-sm">
+                    <div class="section sticky-top">Popüler</div>
+                    @foreach (var c in popularCars)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                    <div class="divider"></div>
+                    <div class="section sticky-top">Tüm Araçlar</div>
+                    @foreach (var c in otherCars)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- PICKUP CITY -->
+        <div class="col-12">
+            <div class="input-group position-relative smart-picker" data-name="pickup">
+                <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                    <span class="fas fa-map-marker-alt"></span><span class="ms-1">Pick Up</span>
+                </div>
+                <input class="form-control smart-input" name="pickup" autocomplete="off" placeholder="Şehir yazın">
+                <div class="smart-dropdown card shadow-sm">
+                    <div class="section sticky-top">Popüler</div>
+                    @foreach (var c in popularCities)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                    <div class="divider"></div>
+                    <div class="section sticky-top">Tüm Şehirler</div>
+                    @foreach (var c in otherCities)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- DROPOFF CITY -->
+        <div class="col-12">
+            <a href="#" class="text-start text-white d-block mb-2">Need a different drop-off location?</a>
+            <div class="input-group position-relative smart-picker" data-name="dropoff">
+                <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                    <span class="fas fa-map-marker-alt"></span><span class="ms-1">Drop off</span>
+                </div>
+                <input class="form-control smart-input" name="dropoff" autocomplete="off" placeholder="Şehir yazın">
+                <div class="smart-dropdown card shadow-sm">
+                    <div class="section sticky-top">Popüler</div>
+                    @foreach (var c in popularCities)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                    <div class="divider"></div>
+                    <div class="section sticky-top">Tüm Şehirler</div>
+                    @foreach (var c in otherCities)
+                    {
+                        <button type="button" class="item" data-value="@c">@c</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarihler -->
+        <div class="col-12">
+            <div class="input-group">
+                <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                    <span class="fas fa-calendar-alt"></span><span class="ms-1">Pick Up</span>
+                </div>
+                <input class="form-control" type="date" name="pickupDate">
+                <select class="form-select ms-3" name="pickupTime"><option>12:00</option></select>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="input-group">
+                <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                    <span class="fas fa-calendar-alt"></span><span class="ms-1">Drop off</span>
+                </div>
+                <input class="form-control" type="date" name="dropoffDate">
+                <select class="form-select ms-3" name="dropoffTime"><option>12:00</option></select>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-light w-100 py-2" type="submit">Book Now</button>
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="quoteModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img id="mCarImg" src="" class="w-100 h-100" style="object-fit:cover;border-top-left-radius:.3rem;border-bottom-left-radius:.3rem;">
+                    </div>
+                    <div class="col-md-7 p-4">
+                        <h5 id="mTitle" class="mb-3"></h5>
+                        <ul class="list-group list-group-flush small mb-3">
+                            <li class="list-group-item">Mesafe: <strong id="mDist"></strong> km</li>
+                            <li class="list-group-item">Süre: <strong id="mDur"></strong> saat</li>
+                            <li class="list-group-item">Ort. tüketim: <strong id="mCons"></strong> L/100km</li>
+                            <li class="list-group-item">Tahmini yakıt: <strong id="mFuel"></strong> L</li>
+                            <li class="list-group-item">Kiralama: <strong id="mRent"></strong> TL</li>
+                        </ul>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tamam</button>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
+</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .smart-picker .smart-dropdown {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        z-index: 1050;
+        display: none;
+        max-height: 230px;
+        overflow: auto;
+        border-radius: .5rem;
+    }
+
+    .smart-picker .section {
+        background: #f8f9fa;
+        color: #6c757d;
+        font-size: .8rem;
+        padding: .5rem .75rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .smart-picker .divider {
+        height: 1px;
+        background: #eee;
+    }
+
+    .smart-picker .item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: #fff;
+        border: 0;
+        padding: .5rem .75rem;
+        font-size: .95rem;
+        cursor: pointer;
+    }
+
+        .smart-picker .item:hover {
+            background: #f1f3f5;
+        }
+</style>
+
+<script>
+    (function(){
+      const norm = s => (s||'').toLocaleLowerCase('tr-TR');
+
+      // ortak picker davranışı
+      document.querySelectorAll('.smart-picker').forEach(box=>{
+        const input = box.querySelector('.smart-input');
+        const menu  = box.querySelector('.smart-dropdown');
+        const items = [...menu.querySelectorAll('.item')];
+
+        const open = ()=>{ menu.style.display='block'; filter(); };
+        const close= ()=>{ setTimeout(()=> menu.style.display='none', 120); };
+
+        function filter(){
+          const q = norm(input.value);
+          let shown = 0;
+          items.forEach(b=>{
+            const ok = !q || norm(b.dataset.value).includes(q);
+            b.style.display = ok ? '' : 'none';
+            if(ok) shown++;
+          });
+          menu.style.display = shown ? 'block' : 'none';
+        }
+
+        input.addEventListener('focus', open);
+        input.addEventListener('input', filter);
+        input.addEventListener('blur', close);
+        menu.addEventListener('mousedown', e=>{
+          const btn = e.target.closest('.item'); if(!btn) return;
+          input.value = btn.dataset.value;
+          menu.style.display='none';
+          e.preventDefault();
+        });
+      });
+
+      // Submit → normal Controller'a POST → modal
+      const form = document.getElementById('resvForm');
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        const carName = form.querySelector('[name="car"]').value.trim();
+        const pickup  = form.querySelector('[name="pickup"]').value.trim();
+        const dropoff = form.querySelector('[name="dropoff"]').value.trim();
+        if(!carName || !pickup || !dropoff) return;
+
+        // price & image: VM'i bozmadan CAR_META sözlüğünden
+        const meta = (window.CAR_META||{})[carName] || { pricePerDay: 0, imageUrl: '' };
+        const price = Number(meta.pricePerDay || 0);
+        const img   = meta.imageUrl || '/cqrsrent/img/car-1.jpg';
+
+        const pd = form.querySelector('[name="pickupDate"]').value;
+        const dd = form.querySelector('[name="dropoffDate"]').value;
+        const days = Math.max(1, Math.ceil((new Date(dd) - new Date(pd)) / (1000*60*60*24)) || 1);
+
+        const res = await fetch('/Reservation/Quote', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ pickup, dropoff, carName, pricePerDay: price, days })
+        });
+        const data = await res.json();
+
+        document.getElementById('mCarImg').src   = img;
+        document.getElementById('mTitle').textContent = `${pickup} → ${dropoff} | ${carName} (${days} gün)`;
+        document.getElementById('mDist').textContent  = (data.distance_km || 0).toFixed(0);
+        document.getElementById('mDur').textContent   = (data.duration_hours || 0).toFixed(1);
+        document.getElementById('mCons').textContent  = (data.avg_consumption_l_100km || 0).toFixed(1);
+        document.getElementById('mFuel').textContent  = (data.fuel_needed_liters || 0).toFixed(1);
+        document.getElementById('mRent').textContent  = (data.rental_cost || 0).toLocaleString('tr-TR');
+
+        const modal = new bootstrap.Modal(document.getElementById('quoteModal'));
+        modal.show();
+      });
+    })();
+</script>
