@@ -57,38 +57,19 @@ yönetim tarafında ise **modal tabanlı CRUD** ve **Dashboard** (Avrupa yakıt 
 
 ## 🖼️ Projeye Ait Fotoğraflar
 
-<details>
-<summary><b>Görselleri göster (10)</b></summary>
+<summary><b>--</b></summary>
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/dade5051-17bb-40ca-925d-7fe866bd2caf" alt="SS 1000" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/7db2c774-bad7-4e1f-88de-34406ea04c42" alt="SS 999" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/862fbbf7-d814-41c4-a5f9-444939c1ab87" alt="SS 888" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/e14b7180-82de-4567-b8ee-773c5a37adb8" alt="SS 777" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/9e1c78a3-455e-4f5e-822c-2f0d1da63262" alt="SS 666" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/3958b39e-46c6-4053-9b69-c49cb9ec1aff" alt="SS 555" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/bc5fa9d6-83ed-4ee7-879e-e887a38e50e0" alt="SS 444" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c1d5402c-8d6c-43f8-804a-408c20808415" alt="SS 333" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/efe316d7-a4d1-4fca-850f-578e9c161a3a" alt="SS 222" width="800" />
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f51ad09b-ad53-4c8a-bbd7-cc7ddcabf455" alt="SS 111" width="800" />
-</p>
+<img width="2560" height="1440" alt="Screenshot 2025-09-10 220003" src="https://github.com/user-attachments/assets/2205e72f-529c-4574-a21a-98d80b291be7" />
+<img width="2560" height="1440" alt="Screenshot 2025-09-10 220025" src="https://github.com/user-attachments/assets/c74eaa91-c79a-4671-8cdb-6b66e5128a1c" />
 
-</details>
+<img width="2560" height="1440" alt="333" src="https://github.com/user-attachments/assets/3912eb5e-3015-44c6-bd94-88c988109231" />
+
+<img width="2560" height="1440" alt="444" src="https://github.com/user-attachments/assets/52d0e773-cddb-49c9-b8d0-d9fbbe005cae" />
+<img width="2560" height="1440" alt="555" src="https://github.com/user-attachments/assets/6a7d48e1-da22-4919-b936-379c6eb66ea5" />
+<img width="2560" height="1440" alt="666" src="https://github.com/user-attachments/assets/d47b7e44-c707-43e3-8354-7b5d7675c861" />
+<img width="2560" height="1440" alt="666" src="https://github.com/user-attachments/assets/d1770032-e4cd-435f-ae45-d456a6df5438" />
+<img width="2560" height="1440" alt="777" src="https://github.com/user-attachments/assets/f82fa62d-450c-4bf6-b2d3-fb3f52a3308b" />
+<img width="2560" height="1440" alt="888" src="https://github.com/user-attachments/assets/bfc9e1be-be58-4fa3-b38b-25644cb11856" />
+<img width="2560" height="1440" alt="999" src="https://github.com/user-attachments/assets/663ed525-35fe-4ad5-8cbe-b3003ecff164" />
+<img width="2560" height="1440" alt="1000" src="https://github.com/user-attachments/assets/715693fe-3344-4df9-b540-61808b54d8f7" />
+
